@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0052)https://hitcon.hackpad.com/ep/pad/static/Fx9aehf98Y9 -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="version" content="266">
+<style>body {font-family:Helvetica}ul.comment{list-style-image:url('https://hackpad.com/static/img/comment.png');} ul.task{list-style-image:url('https://hackpad.com/static/img/unchecked.png');}ul.taskdone{list-style-image:url('https://hackpad.com/static/img/checked.png');} </style><title>/30400$Fx9aehf98Y9</title>
+<style type="text/css"></style></head>
+<body><h1>IoT nano 安裝/問題排除</h1><p></p><p>Hitcon 台灣駭客年會 2015 贈予 Arduino Nano 板</p><p>Arduino nano 3.0</p><p>MCU:ATmega328</p><p>Digital I/O Pins :14 (of which 6 provide PWM output)</p><p>Analog InputPins :8</p><p>Flash :32 KB&nbsp; 2 KB 放 bootloader</p><p>SRAM:2 KB&nbsp;</p><p>EEPROM:1 KB&nbsp;</p><p>Clock Speed:16 MHz</p><p>USB To Serial :CH34xG 晶片</p><p></p><p></p><p><b>安裝驅動:</b></p><p></p><p>若插上去之後, 執行 pyserial 無法收到 nano 的訊息</p><p>請先確認自己的 OS有對應驅動</p><p>google: ch341 OS名稱</p><p>( ch341 可改成 ch340 或 ch34x )</p><p>( Mac OS X El Capitan 驅動會無法使用 )</p><p>我正常使用 <a href="http://www.osslab.com.tw/2352639511234602257721578/arduino-hacker"></a>http://www.osslab.com.tw/2352639511234602257721578/arduino-hacker</p><p></p><p></p><p><b>UBUNTU OS 實務上遇到的問題和解法:</b></p><p></p><p><b>狀況描述:</b></p><p></p><p>測試 ubuntu 14.04 64bit</p><p>插上 nano 後 dmesg 顯示 有抓到 nano, 並成功 attach 到 /dev/ttyUSB0</p><p>但執行 pyserial 後</p><p>只有第一次收的到 nano 傳來的訊息</p><p>第二次以後就都是斷斷續續的幾個 byte, 然後 block 在 port.readline()那一行</p><p></p><p><b>可能原因:</b></p><p></p><p>原因不明, 看起來是 end bit 的問題.</p><p></p><p>A 方認為自己已經送出完整 bit, B方認為 還沒收到 end bit</p><p>所以卡住</p><p>也可能是 pyserial 在 ubuntu 的實作有問題</p><p></p><p><b>實測暫時解法:</b></p><p></p><p>下列方式可以 workaround 並運作:</p><p></p><p>每次都改變 pyserial 判斷 bit 長度的設定</p><p></p><p>原本:</p><p></p><ul class="code"><li>port = serial.Serial(port=’/dev/ttyUSB0’, baudrate=115200, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)</li></ul>
+
+<p>改成:</p><p></p><ul class="code"><li>#<a href="https://hitcon.hackpad.com/ep/search/?q=%23parity&via=Fx9aehf98Y9"> </a>parity = serial.PARITY_EVEN</li>
+<li>parity = serial.PARITY_NONE # setting 1</li>
+<li>parity = serial.PARITY_ODD # setting 2</li>
+<li><br></li>
+<li>port = serial.Serial(port=’/dev/ttyUSB0’, baudrate=115200, bytesize=serial.EIGHTBITS, parity=parity, stopbits=serial.STOPBITS_ONE, timeout=3)</li></ul>
+
+<p>然後每執行完一次, 下次要再次執行時, 把 setting 1 跟 setting 2 對調再執行</p><p>每次都會成功</p><p></p><p>p.s. 1:&nbsp;</p><p>timeout 是方便判斷卡住了沒, 有設的話, 每當 timeout, 會跳一行; 沒有 timeout 會永遠卡在那邊;</p><p>所以當螢幕跳了兩行都沒東西時, 就去改 bit 設定再執行即可</p><p></p><p>p.s. 2:</p><p>也可以改 serial.STOPBITS_ONE 變成&nbsp; serial.STOPBITS_TWO</p><p>或</p><p>改 serial.EIGHTBITS 變成 serial.SEVENBITS</p><p></p><p>原則就是改動判斷 bit 大小的設定, 手動導正</p><p></p><p></p><p></p><p>這個低成本Arduino 用的USB to TTL IC 非常建議換掉.有機會我會用熱風槍吹解焊一下.看看換了後會不會穩定很多.</p><p></p><p>考題韌體？</p><p></p><p></p><p></p>
+
+<div id="window-resizer-tooltip"><a href="https://hitcon.hackpad.com/ep/pad/static/Fx9aehf98Y9#" title="Edit settings"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth"></span> x <span class="tooltipHeight" id="winHeight"></span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth"></span> x <span class="tooltipHeight" id="vpHeight"></span></div></body></html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0052)https://hitcon.hackpad.com/ep/pad/static/b8r2SDHHLrX -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="version" content="8004">
+<style>body {font-family:Helvetica}ul.comment{list-style-image:url('https://hackpad.com/static/img/comment.png');} ul.task{list-style-image:url('https://hackpad.com/static/img/unchecked.png');}ul.taskdone{list-style-image:url('https://hackpad.com/static/img/checked.png');} </style><title>/30400$b8r2SDHHLrX</title>
+<style type="text/css"></style></head>
+<body><h1><b>R0 共筆空間</b></h1><p></p><p><b>8/27&nbsp; Enterprise&nbsp; Day 2</b></p><ul><li><b>13:10-13:50 </b><a href="http://hitcon.org/2015/ENT/Activities-Enterprise-Agenda.html#powerAnalysis">能量分析攻擊 (Power Analysis Attacks)</a> 沒聽但猜測心得</li></ul>
+
+<ul><li>SMARTCard破解我會偏向於 iso 7816仿真,其實這是很老又很普遍hacking技術,用網路封送iso 協議...這個常用於付費衛星收視破解.一張正版衛星卡 ,大家共用這張正版卡的iso 7816 協議(嗯 衛星解密是單向通訊)&nbsp; 這硬體叫CV12很便宜也很多..缺點是 母卡當然要接在讀卡機上再做iso 7816 replay.</li></ul>
+
+<ul><li>現行非網路類 IOT 的漏洞分析,大部份還有留TTL,JTAG debug port 做reversing,ROM 用SPI,NAND(EMMC) dump 這樣會比能量分析省事點可惜我沒去聽,細部怎樣分析SMART Card key.</li></ul>
+
+<ul><li>有人問我能量分析是否萬用,第一個問題是要做訊號取樣,第二主要用於已經沒有半個 debug port, 再來是做keystroke 分析也不錯.</li></ul>
+
+<ul><li>像這個範例電子安全保險箱沒半個debug port外露,但是電源做在外露..(要不然沒電了就打不開了)有EE工程師用示波器做電子保險箱的能量分析,下面是非常棒的step by step 教學影片(雖然能量分析法失敗 , 因為只能抓出四位密碼,但是try error 有限制 ,流程值得一學, 最後成功是跟電影沒二樣 ,用電鑽鑽旁邊 ,電源進入保險箱電磁閥接點)</li></ul>
+
+<p>*</p><p><a href="https://www.youtube.com/watch?v=HxQUKAjq-7w"></a>https://www.youtube.com/watch?v=HxQUKAjq-7w</p><p></p><ul><li>相關</li></ul>
+<ul class="code"><li>&nbsp;<a href="http://product.dangdang.com/23535375.html">密码旁路</a>分析原理与方法&nbsp; <a href="http://product.dangdang.com/23535375.html"></a>http://product.dangdang.com/23535375.html</li></ul>
+<ul><li>硬體&nbsp;&nbsp; ChipWhisperer <a href="https://www.assembla.com/spaces/chipwhisperer/wiki"></a>https://www.assembla.com/spaces/chipwhisperer/wiki</li></ul>
+
+<p></p><h2>8/28 Community Day1</h2><p><b>10:50-11:40 Tools for discovering Flash Player 0-day attacks in the wild from big data</b></p><ul><li>每天有上千個新的可疑 flash，需要自動化工具<ul><li>誤判率要很低：corrupted vector huge length</li>
+<li>需要寫log</li>
+<li>(還有兩個沒記錄到</li></ul>
+</li>
+<li>FED(FlashExploitDetector): IE BHO</li>
+<li>簡化後的 exploit flow<ul><li>VectorAllocate() -&gt; triggerVulnerability() -&gt; findCorruptVector() -&gt; BuildRopAndShellCode() -&gt; execRopAndShellCode()</li></ul>
+</li>
+<li>理想化的檢測 （哪裡截斷....）</li>
+<li>Key function: AVM2(<a href="http://github.com/adobe-flash/avmplus)"></a><a href="http://github.com/adobe-flash/avmplus">http://github.com/adobe-flash/avmplus</a>)<ul><li>JIT 流程的 function: BaseExecMgr::verifyJit</li></ul>
+</li>
+<li>實際流程<ul><li>每個函式 -&gt; JIT_HOOK()-&gt; CheckVectorLen();</li></ul>
+</li>
+<li>How to hook flash OCX<ul><li>使用像 Windbg’s module load event</li>
+<li>Hook CoGetClassObject function in urlmon.dll</li>
+<li>使用IsEqualCLSID(rclsid, CLSID_Flash) identify</li></ul>
+</li>
+<li>DEMO: CVE-2015-1559</li>
+<li>Debug 困難點<ul><li>Flash player 沒有 symbol</li>
+<li>AS3 是 JITed, address is dynamic</li></ul>
+</li>
+<li>基於困難點寫的 tool<ul><li>windbg extension named DbgFlashVul</li>
+<li>可以 trace AS3 method</li>
+<li>可以設定 bp 在 AS3 method name</li></ul>
+</li>
+<li>ＤbgFlashVul command<ul><li>!EnableTraceJit 1</li>
+<li>!SetBpForJitCode</li></ul>
+</li>
+<li>example: CVE-2015-3090<ul><li>get ROP gagdets and shellcode</li>
+<li>Almost every flash exploit using corrupt vector will have two AS3 functions like read_memory and write_memory，所以在&nbsp; write_memory 設定 bp get what they write in memory<ul><li>corruptVector[index] = value</li></ul>
+</li></ul>
+</li>
+<li>Hook BaseExecMgr::verifyJit can get emitted code address and MethodInfo object</li>
+<li>give up...看不清楚</li>
+<li>Vector length Mitigation<ul><li>1.?</li>
+<li>2.vector buffer object isolated</li>
+<li>還是可以bypass，但比較困難，攻擊者要有好的漏洞</li></ul>
+</li></ul>
+
+<p><b>11:50-12:40 What Google knows about you and your devices (and how to get it)</b></p><ul><li>what’s our motivations</li></ul>
+
+<p></p><ul><li>What’s inside an What’s inside an iCloud Backup?</li>
+<li>ICloud ICloud drive</li></ul>
+<p>more application data</p><p>Password data</p><p></p><p></p><p></p><p></p><p>Over-the-air acquisition</p><p></p><p></p><p></p><p>Two-factor authentication may be an issue</p><p></p><p>Two-step verification</p><p></p><ul><li><br><ul><li>Chrome<ul><li>history</li>
+<li>synced passwords and autofit data</li>
+<li>bookmarks</li>
+<li>search history</li></ul>
+</li></ul>
+</li>
+<li>Google Transparency Report</li>
+<li>Google sign-on<ul><li>sign-on any google service</li></ul>
+</li>
+<li>Security Settings<ul><li>what devices can access your account</li></ul>
+</li>
+<li>Recent security events and used devices, apps connected, saved passwords</li>
+<li>takeout</li>
+<li>Google dashboard<ul><li>account activity</li>
+<li>mail</li></ul>
+</li>
+<li>Android device backups</li>
+<li>Google Photos</li>
+<li><br></li>
+<li>Hangouts</li>
+<li>Google Drive</li>
+<li>How Hackers get passwords</li>
+<li>Phishing</li>
+<li>Brute-force attacks</li>
+<li>passwd reset/recovery</li>
+<li>key logger</li>
+<li>Fake ap</li>
+<li>Network sniffing</li>
+<li>Social engineering</li>
+<li>Password re-use</li>
+<li>How LE get passwords</li>
+<li>How to protect yourself?</li>
+<li>do not use clouds 特別是使用 privacy data</li>
+<li>機敏資訊不要存在手機</li>
+<li>第三方加密</li>
+<li>小心推送的mail(?</li>
+<li>......</li></ul>
+
+<p><b>13:50 <a href="http://hitcon.org/2015/CMT/agenda/#day1-keynote2">Keynote: Attacking LINE product by grayhats</a></b></p><p>Who challenges Line</p><ul><li>Crackers, the Evil</li></ul>
+<ul style="list-style: none;"><li>只要防護做好，就算進來也不容易出得去？</li></ul>
+<ul><li>Abusers, the money hunter</li></ul>
+<ul style="list-style: none;"><li>詐騙使用者，例：點數卡詐騙等</li></ul>
+<ul><li>Our holy family apps, Line Game and others</li>
+<li>Governments, MIB of some countries</li>
+<li>Our beloved users, saying "Happy New Year" at 0:00 o’clock</li></ul>
+<ul class="code"><li>&nbsp;在使用者行為上，特定時間會發出特定的訊息，例如新年會有很多人發送新年快樂的DDOS攻擊</li></ul>
+
+<p>Our Challenges</p><ul><li>Stronger but seamless encryption for all platforms</li>
+<li>Anti-DDoS</li>
+<li>Spam and phishing</li></ul>
+<ul style="list-style: none;"><li>因為客戶隱私，不看訊息內容，所以只能依照發送人數、檢舉人數等等判斷(像是Line)</li></ul>
+<ul><li>In-app purchase refund abusing</li>
+<li>And all Social Engineering attacks<ul><li>難以用技術改變使用者的習慣，介面設計盡量讓使用者免於受駭</li></ul>
+</li></ul>
+
+<p>Our Responses&nbsp;</p><ul><li>徵求hackers<ul><li>從外部Hackers幫忙找漏洞</li></ul>
+</li>
+<li>公司有自己的Security Team<ul><li>隨時檢查code安全性，例如密碼是否hash</li>
+<li>資料存放有設定好的存放位置及加密方式</li></ul>
+</li>
+<li>Security Analysis<ul><li>Secure by Design</li></ul>
+<ul style="list-style: none;"><li>eg:身分證號碼加密</li></ul>
+<ul><li>Multi-stage review of all product creations</li>
+<li>Full security assessment prior to product delivery</li>
+<li>Source code review&nbsp;</li></ul>
+</li></ul>
+<p>上線前要還做一份Power Point</p><p>當Kernel出現問題時要立回報&nbsp;&nbsp;&nbsp;</p><ul><li>LINE 中最常見的問題<ul><li>帳密洩漏</li>
+<li>密碼忘記&gt;recycle</li>
+<li>最嚴重的漏洞&gt;使用者的問題? (ALL problems come from USER)</li>
+<li>非資安漏洞 而是"洩漏"</li></ul>
+</li>
+<li>如何防止帳號被盜?<ul><li>換機(pincode)(禁止跨國換機)</li>
+<li>每日檢視換機紀錄</li>
+<li>不要使用相同的密碼/簡單密碼</li>
+<li>pattern detection(使用者習慣/行為分析)&gt;spammers也在try使用者的pattern</li></ul>
+</li>
+<li>spam偵測，檢查是否有重覆的訊息發送</li>
+<li>做 pattern detection 遇到的問題</li>
+<li>行為(hash)比內容(中、英文，語意)好做分析</li>
+<li>除https加密，也有自己的加密，以減少MITM攻擊的可能性</li>
+<li>不讓情資單位聽，資料需要再加密</li>
+<li>限時聊天功能，一分鐘內資料不見，不需要產生金鑰</li>
+<li>line server不留任何資料，資料只留client(E2EE ,Free from the creator)，金鑰由client 計算。</li>
+<li>資料同步功能有下相當功夫，所以client訊息刪除，電腦版不會有資料</li>
+<li>PIN CODE超過7碼以後，絕大多數使用者都難以記得</li>
+<li>安全不只有系統 也包括產品的設計</li>
+<li>對稱性的key加密解密比較快&gt;computer power考量</li>
+<li>true delete(早期程式),真的把資料清掉vs只是delete&gt;手機被盜也沒辦法從memory storage 還原</li>
+<li>30w NT最高獎金(line漏洞)</li>
+<li>手機ROOT也無法存取程式本體及存在手機裡的訊息(加密儲存)。</li>
+<li>5.3本體Sqlite 加密 （True Delete)</li>
+<li>台日韓徵才 !!</li>
+<li>Q&amp;A<ul><li>資料存使用者端blablabla...有什麼建議</li>
+<li>跨平台問題，讓安全的程式很難寫</li>
+<li>不會做監聽的功能(就算法院要求)只會拿到可以拿到的東西 文化跟堅持</li></ul>
+</li></ul>
+
+<p><b>14:50 <a href="http://hitcon.org/2015/CMT/agenda/#day1-c-r0">Web Hacking 中的奇技淫巧</a></b></p><ul><li>這場演講會有很多程式碼 講到你睡我就贏了</li>
+<li>核心概念：<ul><li>思路 與 漏洞 -&nbsp; 猥瑣「流」<ul><li>perl語言特性(舉個栗子)<ul><li>my $otheruser = Bugxilla::User&gt;creat 打字GG</li></ul>
+</li>
+<li>windows特性造成網頁應用限制過<ul><li>windows API檔名正規化</li>
+<li>windows tilde短檔名特性&gt;備份用MP5&gt;檔名加上~1</li>
+<li>ex)</li></ul>
+</li></ul>
+</li>
+<li>思路 與 漏洞<ul><li>Q: 資料庫中的密碼破不出來怎麼辦？<ul><li>路不是只有一條</li></ul>
+</li></ul>
+</li>
+<li>分層 與 漏洞<ul><li>關注於web app sucurity：injection、XSS、CSRF</li>
+<li>防守面、攻擊點</li></ul>
+</li></ul>
+</li>
+<li>三個有趣、易忽略(本文)<ul><li>正規表示是換行特性<ul><li>黑名單被繞過</li>
+<li>/resize.php</li>
+<li>繞過防禦繼續攻擊</li>
+<li>換行也是一種可以接受的新指令的開始</li>
+<li>繞過防禦繼續exploit</li>
+<li>傳圖片&gt;結尾xxx.php&gt;server以php解析&gt;管理員防禦&gt;只要/.php *.php 回傳403</li>
+<li>不了解特性&gt;症狀解&gt;容易繞過</li>
+<li>php 5.3.9以後版本&nbsp;</li></ul>
+</li>
+<li>mysql編碼型態轉換編碼型態轉換特性<ul><li>&nbsp;輸入內容大於指令型態<ul><li>user那邊拿到一個未註冊名字&gt;目標註冊管理員帳號&gt;create table</li>
+<li>mysql預設狀況下 &gt;255(admin+space*255) 還是會執行成功&nbsp;&nbsp;</li>
+<li>漏洞在wordpress 4.2.1</li>
+<li>TEXT 預設長度：65536&gt;使用者輸入使用者輸入超過6&gt;截斷</li>
+<li>unicode 編碼值截斷</li>
+<li>UTF-8編碼-&gt; 註冊(帳號名稱)admin以及admin-_(沒聽到)_&nbsp; &gt;出現警告(警告不重要、錯誤才重要)&gt;但是資料庫出現兩個admin&gt;相當於可以自己設定密碼?</li>
+<li>:emoji_1f34a:emoji hacking</li></ul>
+</li></ul>
+</li>
+<li>sql_mode = srict utf8mb4<ul><li><br></li></ul>
+</li>
+<li>coldfusion with apache connector (舊版本有double encoding 漏洞造成資訊洩漏)<ul><li>讀.htaccess&gt;apache因為某些原因(filematch)此規則會回傳404</li>
+<li>.htaccess%2500.cfm&gt;coldfusion &gt;.htaccess/2500.cfm(*.cfm會造成一些資料漏洞)<ul><li>↑一次繞過兩層機制</li>
+<li>admin%252f.htaccess%2500.cfm -&gt;apache-&gt; admin%252f.htaccess%00.cfm-&gt; coldfusion-&gt; admin/.htaccess .cfm</li></ul>
+</li></ul>
+</li></ul>
+</li>
+<li>Q&amp;A<ul><li>白名單比較經典的例子?<ul><li>特性利用<ul><li>discuss一些key&gt;可以對後台做一些動作</li></ul>
+</li></ul>
+</li>
+<li>花多久來學?<ul><li>一個領域成為大師&gt;1萬個小時<ul><li>16個小時/1D&gt;4年</li>
+<li>8hr/1D&gt;8year</li>
+<li>橘子高中每天&gt;大約大一成為__</li>
+<li>只要有心 大家都可以成為食神</li></ul>
+</li></ul>
+</li></ul>
+</li>
+<li>橘子投影片 :<a href="http://blog.orange.tw/2015/08/hitcon-2015-community-web-hacking.html"> </a><a href="http://blog.orange.tw/2015/08/hitcon-2015-community-web-hacking.html"></a><a href="http://blog.orange.tw/2015/08/hitcon-2015-community-web-hacking.html">http://blog.orange.tw/2015/08/hitcon-2015-community-web-hacking.html</a></li></ul>
+
+<p>Hacking mobile network via SS7: interception, shadowing and more</p><p>經由第七號協定系統入侵行動網路：截擊、遮蔽和其他...</p><p>註1：在電信系統中，專門用於傳送控制信號的系統稱 為信令系統（signaling system），而最常見的信 令系統為第七號信令系統（Signaling System Number 7，SS7），它提供電話交換機間控制信 號傳送的管道，是電信公司能夠提供像建立電話 這樣許多服務的基礎。</p><p></p><p>INTRO</p><p>IN SERVICE LTE NTEWORKS</p><p>註：LTE是長期演進技術 (Long Term&nbsp; Evolution)的簡稱，為是目前在市場上備受矚目的新一代行動無線寬頻技術，它可以讓服務供應商透過較為經濟的方式提供無線寬頻服務，並超越現今 3G無線網路的效能、帶來更優異的表現。LTE已正式被第三代行動通訊組織 (Third Generation Partnership&nbsp; Project，簡稱3GPP)&nbsp; 列為全新的無線標準技術。LTE除了能夠針對無線寬頻數據設計出最佳化的性能，它另一項特色是能與GSM服務供應商的網路相容，無論這些服務供應商是否已 經部署UMTS技術，都可進行添增LTE的營運規劃。</p><p>VoLTE NETWORKS</p><p>&nbsp; 註：VoLTE（Voice over LTE）是指利用 4G LTE 網路傳送語音和影像等服務，讓 4G 用戶在通話時，直接在 4G&nbsp; 網路上進行語音通話，不需要回到 3G 網路。也因為語音通話將透過 4G 網路進行，所以主要有兩大優勢：一是快速的通話連接，目前 3G&nbsp; 通話撥接時間約需 6 到 8 秒，透過 VoLTE 網路最快可於 1&nbsp; 秒內響鈴、接通電話；二是高品質的語音通話，能讓聲音更立體、話質更清晰，另外還能隨時切換語音與視訊通話。</p><p></p><p>目前僅在日本南韓跟香港使用有商用化的<i>VoLTE 網路</i></p><ul style="list-style: none;"><li><br></li></ul>
+<p>The most of the world performs Hangdover 世界各國網路平台交換的狀況</p><p>LTE only for web browsing To perform a call subscriber is downgraded to 3G (handover)&nbsp;</p><p>目前的LTE網路 使用上 只針對網頁瀏覽要進行呼叫的用戶降級到3G（移交）</p><p>(簡單的說就說只有在瀏覽網路頁面的時候會自動降級到3G網路進行連線傳送)</p><p></p><p>interconnect / roaming 互聯/漫遊</p><p></p><p>kind of ipv4 vs ipv6&nbsp;</p><p></p><p>SS7 is still most used interconnect/ roaming network SS7仍然是最常用的互連/漫遊協定</p><p></p><p>2014 - year of SS7 security issues</p><p>SS7 for (bad) guys&nbsp;</p><p>&nbsp;&nbsp; Tracking</p><p>&nbsp;&nbsp; Denial of Service</p><p>&nbsp;&nbsp; Interception</p><p>&nbsp;&nbsp; Threats to Operator</p><p>&nbsp;&nbsp; Threats to IoT&nbsp;&nbsp;</p><p>Tracking / 跟蹤(位置)</p><p>Common Step 0 for Any Attack</p><p>&nbsp;&nbsp; Attacker sends request SendRoutingInfoForSM addressing MAP message by MSISDN</p><p>&nbsp;&nbsp; HLR replies with:&nbsp;</p><p>&nbsp;&nbsp;&nbsp; • own address&nbsp;</p><p>&nbsp;&nbsp;&nbsp; • serving MSC address&nbsp;</p><p>&nbsp;&nbsp;&nbsp; • IMSI&nbsp;&nbsp;</p><p>Get Cell ID</p><p>&nbsp;&nbsp;&nbsp; Attacker sends request provideSubscriberInfo addressing MAP message by IMSI and asking for subscriber location</p><p>&nbsp;&nbsp;&nbsp; MSC replies with Cell ID:</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • MCC - 250</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • MNC - 90&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • LAC 4A67&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • CID 673D&nbsp;</p><p>&nbsp;Get Location…</p><p>&nbsp;…and Track User Just Like SkyLock</p><p>&nbsp;<a href="http://s3.documentcloud.org/documents/1275167/skylock-product-description-2013.pdf"></a>http://s3.documentcloud.org/documents/1275167/skylock-product-description-2013.pdf</p><p>&nbsp;Common Step 0 for Any Attack</p><p>&nbsp;&nbsp;&nbsp;&nbsp; Attacker sends request SendRoutingInfoForSM addressing MAP message by MSISDN</p><p>&nbsp;&nbsp;&nbsp;&nbsp; HLR replies with:&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp; • own address • serving MSC address • IMSI&nbsp;</p><p>How to Intercept SMS 截聽短信</p><p>&nbsp;&nbsp; A virus on a smartphone – and what if a certain subscriber is a target? How to infect him particularly?</p><p></p><p></p><p>&nbsp;&nbsp;&nbsp;</p><p>需要無線電監聽設備。並且在目標附近</p><p></p><p>Reissue SIM? It works only once.&nbsp;</p><p>Radio signal interception (GSM A5/1)? You need to be nearby.&nbsp;</p><p>Via SS7 network</p><p></p><p>How to Get Into SS7</p><p>How They Can Get Into SS7</p><p>&nbsp; Legal with license Semi legal without</p><p>&nbsp; Find a guy&nbsp;</p><p>&nbsp; Hack border device</p><p>Find a Guy</p><p>&nbsp;</p><p>Looking to get LAC/CELL ID from a VLR lookup</p><p>Misconfiguration Example</p><p>Research Updates</p><p>&nbsp;&nbsp; SS7 security threats</p><p>&nbsp;&nbsp; Mobile Internet vulnerabilities (GPRS)&nbsp;</p><p>&nbsp;&nbsp; SIM vulnerabilities</p><p></p><h2>8/29 Community Day2</h2><p><b>Keynote: New Mindset for Malware Battlefield: Bytecode Analysis and Physical Machine-based for Android</b></p><ul class="comment"><li>2015年，可上網裝置數量高達100億&nbsp;&nbsp;&nbsp;</li>
+<li>&nbsp;90% of the world’s data has been generated in the past two years.</li></ul>
+<ul><li>&nbsp;2015年全世界的新鮮病毒，達年產一億隻(Android 219萬隻)；每天近30萬隻新鮮的病毒，AV被DDoS</li>
+<li>&nbsp;上網裝置的數量及惡意程式的產量已經超出人力分析的範圍</li>
+<li>&nbsp;手機惡意程式的元祖(2010年)</li>
+<li>&nbsp;FakePlayer( 壞人單靠發簡訊就可以幹壞事，俄羅斯的電話號碼)</li>
+<li>SMSsreplicator 竊取簡訊</li>
+<li>&nbsp;tapsnake第一支GPS竊取</li>
+<li>&nbsp;geinimi第一支後捫</li></ul>
+<p>&nbsp;</p><ul><li>&nbsp;標榜貪食蛇實際上是GPS定位</li>
+<li>&nbsp;如果沒有從googleplay原廠，喜歡從第三方商城購買軟體，很容易買到包裝成正常軟體的ˋ惡意程式</li></ul>
+<p>&nbsp;</p><ul><li>&nbsp;手機三痛<ul><li>監聽、定位、資料外洩&nbsp;</li></ul>
+</li></ul>
+
+<ul><li>惡意程式下手的地位置 權限、行為及通訊payload&nbsp;</li>
+<li>靜態分析--&gt;檢查API呼叫</li>
+<li>動態分析(需要跑起來-沙箱)--&gt;觀察通訊行為</li>
+<li>駭客以(Obfucation/Packing)混碼、加殼避免靜態分析</li>
+<li>映射(reflection)--程式執行時期，可以自我修改調整，苦了資安，靜態無法分析動態</li>
+<li>APP 程式加殼的方法太多種了</li>
+<li>Sandbox--給小朋友玩玩沙</li>
+<li>能騙駭客幾次?</li>
+<li>偵測沙箱的基本資訊，惡意程式可以很容易偵測出自己在沙箱環境，避免被動態分析</li>
+<li>靜態分析的門檻較高，不一定只能分析Java原始碼，Bytecode也可以。但一定要用電腦看，肉眼解讀很辛苦。</li>
+<li>案例介紹<ul><li>被害端手機螢幕畫面被上鎖，並留下駭客聯繫方式</li>
+<li>被害者手機會自動傳送簡訊至攻擊者端</li>
+<li>如果要反阻譯APK，會被攻擊者使用嘲諷攻擊</li></ul>
+</li>
+<li>人類的知識<ul><li>1900年</li></ul>
+</li></ul>
+<ul style="list-style: none;"><li><br></li><ul><li>1945 年<ul><li>25年人類集體知識翻倍</li></ul>
+</li></ul>
+</ul>
+<ul style="list-style: none;"><li><br></li><ul><li>2014 年<ul><li>13個月翻倍</li></ul>
+</li></ul>
+</ul>
+<ul style="list-style: none;"><li><br></li><ul><li>2020年<ul><li>12小時翻倍</li></ul>
+</li></ul>
+</ul>
+<ul style="list-style: none;"><li><br></li><ul><li>2049<ul><li>$1000 computer&nbsp; 等於人類集體的知識</li></ul>
+</li></ul>
+
+<li>結論：新威脅一定會出現，資安防禦一定要高度，讓機器來幫忙，操機器不要操人</li></ul>
+<ul><li>Q&amp;A：現有這麼多惡意手機APP，為何都沒有做管制，反而還需要需要這類的產品來做反組譯。ANS：應該Google自己跳下來玩，商業策略。</li>
+<li>Q&amp;A：Docker當virtual machine來做測試？那目前還沒有這樣做過</li></ul>
+
+<p></p><p><b>10:20 ~ 11:10&nbsp;&nbsp; Medical device security, critical infrastructure inside hospitals and abusing HL7 protoco</b></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 攻擊醫療器材的利基在於病患的隱私及金融資訊</p><p>&nbsp; 2015 is already the years if th health-care hack&nbsp; -and it’s only going to get worse</p><p>&nbsp; (EMR )電子病歷系統會儲存病患所有的資料(Doctor’s 秘書 護士的PC/Mobile,其他醫院,其他醫院設備都會連該系統；病人Monitor 會透過LAN/Wifi/Bluetooth 連結該系統)</p><p>&nbsp; 裝置會透過wIFI將資料傳送到電子病歷系統，而wifi通道本身就是可被攻擊的弱點</p><p>&nbsp; 醫院遇到的挑戰─缺乏設備之間的加密以及技術人員</p><p>&nbsp; 醫院的觀點─可以運作就是好的(沒甚麼威脅)；CyberSucurity需要再多投資以及技術劃分；廠商要管好設備的安全；我們是醫院，攻擊我們做甚麼?怎麼不去攻擊NASA？ 醫生覺得我是醫生，我不是Cyber Warriors</p><p>&nbsp; 加強設備的Security--除非必要，不然別讓設備上網,確認設備是有Patched</p><p>&nbsp;&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p><b>11:20~12:10&nbsp;&nbsp;&nbsp; Adversaries hiding in your routers - APT malware Plead analysis and tracking</b></p><p>&nbsp; <b>PLEAD--專門攻擊台灣Router的程式</b></p><p>&nbsp; Develop purely in Shellcode</p><p>&nbsp; adopting skillful</p><p>&nbsp; Trendmicro 2014 report&nbsp; 針對政府單位進行攻擊</p><p>&nbsp; PLEAD早在2011年就已經被發現(rcs.doc)</p><p>&nbsp; 後門程式使用7個指令</p><p>&nbsp;&nbsp;</p><ul><li>&nbsp; 四個Plead惡意程式分析</li></ul>
+<ol><li>Process Injection注入ie</li>
+<li>Downloader</li>
+<li>PLEAD loader<ol><li>惡意程式主體不便，每年用新的 loader 避免防毒偵</li></ol>
+</li></ol>
+<ul style="list-style: none;"><li>b.惡意程式碼在記憶體裡面重組，較可以避開防毒軟體的偵測</li></ul>
+<ol><li>某隻以前覺得很難分析的後門。</li></ol>
+<p>&nbsp; 於字典檔隨機加入字串放入C2得連線中，混淆PATTEN的製作</p><p>&nbsp;&nbsp;</p><ul><li>&nbsp;Hacking team Tool CVE-2015-5119<ul><li>only in memory，無實體檔案，防毒難以偵測</li></ul>
+</li>
+<li>PLEAD進入電腦後如何滲透<ul><li>觀察目標網路的防毒軟體，研究如何利用</li>
+<li>透過防毒軟體漏洞，突破目標防禦</li>
+<li>隨著防毒軟體更新，攻擊工具也一起升級</li></ul>
+</li>
+<li>&nbsp;GDrive Rat 二線後門工具<ul><li>&nbsp;攻擊者攻擊進目標後，會主動上傳目標文件至GoogleDrive</li>
+<li>只看得到 Google 連線，由網管網路端難以偵測到</li>
+<li>plead先進入後，發現此為有價值受害者，GDrive Rat接著進入攻擊</li></ul>
+</li>
+<li>Phantom in routers<ul><li>中繼站大多數為台灣的動態ip</li>
+<li>2015年3月，攻擊台灣的樣本<ul><li>使用中繼站domain</li>
+<li>做dns query時：CNAME xxxx.commasus.com</li>
+<li>華碩所生產wireless Router</li>
+<li>Remote Code exploit(CVE-2013-4659)</li>
+<li>華碩<s>貼心</s>動態域名服務</li>
+<li>攻擊者會在router加入vpn，並做port mapping導到真正的攻擊者</li>
+<li>以達成透過wireless router來做中繼站</li></ul>
+</li>
+<li>8個class B網段調查<ul><li>11.09%存在漏洞(10140/total 91405 ip)</li></ul>
+</li></ul>
+</li>
+<li>結論<ul><li>Plead此攻擊族群只針對台灣進行攻擊，包括政府單位、企業單位</li>
+<li>擁有高明技巧且難以追蹤</li>
+<li>把工具跟hacking team結合</li>
+<li>無檔案型態後門程式（只存在memory）</li>
+<li>Diskless RAT</li>
+<li>Gdrive RAT 難以偵測</li>
+<li>Routers 攻擊讓研究人員難以追蹤</li></ul>
+</li>
+<li>TT：多謝翻譯組w</li>
+<li>Q&amp;A<ul><li>Router沒有裝後門，直接連動態域名<ul><li>家裡Router有漏洞</li>
+<li>被加入VPN帳號</li>
+<li>做port mapping</li>
+<li>後門程式設定連到那個被攻擊的router</li>
+<li>直接被導到真實世界的某個ip</li>
+<li>Router對public IP開控制界</li></ul>
+</li></ul>
+</li></ul>
+
+<p><b>13:20~14:10 HITCON Project 發表 + 奇葩獎頒獎典禮</b></p><p>&nbsp;</p><p>&nbsp;Project</p><ul><li>&nbsp;源起<ul><li>&nbsp;資安技術文章四散</li>
+<li>&nbsp;社團課程成果分享不易</li></ul>
+</li></ul>
+<p>&nbsp;</p><ul><li>&nbsp;資安技術資源平台<ul><li>&nbsp;累積知識</li>
+<li>&nbsp;技術交流</li>
+<li>&nbsp;讓學習更容易</li></ul>
+</li></ul>
+<p>&nbsp;</p><p>&nbsp;為什麼台灣沒有像烏雲的平台</p><p>&nbsp;讓大家可以鍵盤參與</p><p>&nbsp;</p><ul><li>&nbsp;文章類型<ul><li>Ctf writeup</li>
+<li>漏洞分析</li>
+<li>逆向工程</li>
+<li>破解技術</li>
+<li>資安事件</li></ul>
+</li>
+<li>平台內容<ul><li>原創</li>
+<li>翻譯</li>
+<li>邀稿</li>
+<li>轉載</li>
+<li>研討心得</li></ul>
+</li>
+<li>未來活動<ul><li>徵稿贈票</li>
+<li>小型研討會</li>
+<li>電子刊物</li></ul>
+</li>
+<li>K=(p+i)×s<ul><li>knowledge</li>
+<li>people</li>
+<li>information</li>
+<li>share</li></ul>
+</li></ul>
+<p>積沙成塔</p><p></p><p><a href="http://kb.hitcon.org/"></a>http://<a href="http://b.hitcon.org/">k</a>b.hitcon.org</p><p></p><p></p><p>奇葩獎</p><p>去年梗:防火牆入侵很困難，需要一點時間</p><p></p><p>最佳名言</p><p>不要存，不要存，直接傳到財政中心雲端就好→得獎</p><p>要安全，主機一定要在自己的手上</p><p>撕破了好幾個女兵的褲子，才能進去中華電信機房</p><p></p><p>寶物失竊獎</p><p>台北市刑大遭竊，電腦監視器被偷 嫌供稱 缺錢花用(實體安全)→得獎</p><p>鴻海遭攻擊，數位憑證疑被竊</p><p>宏碁簽章遺失，連同Flash player</p><p>遊戲遭植後門程式</p><p></p><p>一擊必殺獎</p><p>甲骨文安全長發文：不准抓我們產品漏洞→花絮</p><p>↑就算你叫破了喉嚨 也不會有人來救你的</p><p>匿名者癱瘓 國民黨:再入侵要報警</p><p>&nbsp;↑實在是讓我們 感到非常的害怕</p><p>&nbsp;民進黨遭駭客入侵：紙本面交→得獎</p><p>&nbsp;↑無法理解 現在有幾個帶筆的(請舉手...這麼多喔)</p><p>&nbsp;</p><p>&nbsp;年度駭客研究獎</p><p>&nbsp;PCHome IM app弱點研究。&nbsp; Zhi-Wei Cai(蔡姓網友)</p><p>&nbsp;露天拍賣漏洞 同上(蔡姓網友)</p><p>&nbsp;↑我不知道這位蔡姓網友是不是時間特別多啊?</p><p>&nbsp;悠遊卡app 的實作不安全導致 Api key 外洩→得獎</p><p>&nbsp;↑蔡姓網友他破...研究了這APP</p><p>&nbsp;寬宏售票全民免費直接資料庫存取</p><p>&nbsp;</p><p>&nbsp;遺珠</p><p>&nbsp;Ashley Madison 會員email外洩</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p><b>14:20~15:10 A Dozen Years of Shellphish - from DEFCON to the Cyber Grand Challenge</b></p><ul><li>DEFCON<ul><li>Goal<ul><li>Get flags on others’ servers</li>
+<li>Protect my flag from others</li>
+<li>Keep all services working</li></ul>
+</li></ul>
+</li>
+<li>Old Tools<ul><li><a href="https://github.com/shellphish/puppeteer"></a>https://github.com/shellphish/puppeteer</li></ul>
+</li>
+<li>New Binary Analysis Tools - Angr<ul><li>Source Code<ul><li><a href="https://github.com/angr/angr"></a>https://github.com/angr/angr</li></ul>
+</li>
+<li>Website<ul><li><a href="http://angr.io/"></a>http://angr.io/</li></ul>
+</li>
+<li>Slides<ul><li><a href="https://goo.gl/xFYltI"></a>https://goo.gl/xFYltI</li></ul>
+</li>
+<li>Features<ul><li>有 GUI 介面！！</li>
+<li>Open Source</li>
+<li>Free</li>
+<li>Static Analysis</li></ul>
+</li></ul>
+</li></ul>
+
+<p><b>15:40~16:30 Lightning Talk 閃電秀&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></p><p>In-flight Hacking</p><ul><li>飛機上的 Wifi 要錢<ul><li>hack it</li></ul>
+</li>
+<li>Try<ul><li>DNS works</li>
+<li>port 80 works</li>
+<li>United.com can be accessed</li></ul>
+</li>
+<li>Maybe there is a whitelist<ul><li>找一下驗證漏洞</li></ul>
+</li>
+<li>發現只要在 HTTP Request 的 host 前面加上 united.com 就可以成功繞過 WIFI !!!<ul><li>Ex<ul><li>united.com@www.google.com</li></ul>
+</li></ul>
+</li></ul>
+
+<p>天才小釣手</p><ul><li>學校的資訊系統爛爛<ul><li>還沒有 API, GG</li></ul>
+</li>
+<li>實驗<ul><li>類型<ul><li>做一個大家都想要用的網站</li>
+<li>需要驗證學生身份</li></ul>
+</li>
+<li>找直屬網站！！<ul><li>資料從路邊撿來</li>
+<li>流程<ul><li>登入 FB</li>
+<li>輸入學號&amp;密碼（釣魚） or 收 email 驗證</li>
+<li>看到結果</li></ul>
+</li></ul>
+</li></ul>
+</li>
+<li>結果<ul><li>約 10000 使用者用過</li>
+<li>67% 被釣魚，33% 用 email</li></ul>
+</li></ul>
+
+<p>2014 ~ 2015</p><ul><li>DEVCORE</li>
+<li>漏洞修一年的故事<ul><li>發生在 2014.7.15</li>
+<li>發現 EasyWallet 的很多弱點<ul><li>可以用卡號查出進出站資訊</li>
+<li>可以存取電子發票記錄</li></ul>
+</li>
+<li>路人可以很輕易地靠近就取得卡號</li>
+<li>詳情會發表在 blog<ul><li><a href="http://devco.re/blog"></a>http://devco.re/blog</li></ul>
+</li>
+<li>今年六月修復</li>
+<li>貼 FB 比跟董事長說還要有用</li></ul>
+</li></ul>
+
+<p>Testing Eurion</p><ul><li>Money is good</li>
+<li>Eurion<ul><li>圓圈星座防偽技術</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%9C%86%E5%9C%88%E6%98%9F%E5%BA%A7%E9%98%B2%E4%BC%AA%E6%8A%80%E6%9C%AF"></a>https://zh.wikipedia.org/wiki/%E5%9C%86%E5%9C%88%E6%98%9F%E5%BA%A7%E9%98%B2%E4%BC%AA%E6%8A%80%E6%9C%AF</li></ul>
+</li></ul>
+<ul class="comment"><li>我投降 OAQ，請求支援</li></ul>
+
+<p>那些年我們一起討厭的密碼</p><ul><li>很多網站密碼外洩<ul><li>都使用者的錯就對啦</li>
+<li>開發者也討厭處理密碼</li></ul>
+</li>
+<li>2FA<ul><li>安全一點</li>
+<li>缺點<ul><li>要保護金鑰</li>
+<li>要手動操作設備</li>
+<li>無法抵擋釣魚網站</li>
+<li>...</li></ul>
+</li></ul>
+</li>
+<li>尋找更安全的方案</li>
+<li>FIDO U2F<ul><li>Universal 2nd Factor</li>
+<li>不需要 3rd party</li>
+<li>公開標準</li>
+<li>實體金鑰</li>
+<li>...</li></ul>
+</li>
+<li>引入 U2F 不會太難<ul><li>之後會公佈在 Github</li></ul>
+</li></ul>
+
+<p>你知道的，WebATM</p><ul><li>WebATM 有加密嗎？<ul><li>SHA-1 還有很多銀行 (31 家) 在用</li>
+<li>SHA-2 只有 6 家在用</li>
+<li>長度只有設 2048</li>
+<li>憑證鍊錯誤比比皆是</li></ul>
+</li>
+<li>很多不安全的加密法還有很多人在用</li>
+<li>某家官股銀行使用了 NULL Cipher</li>
+<li>新技術幾乎沒有人用</li></ul>
+
+<p>CPRTeam</p><ul><li>HITCON 2011 的問題<ul><li>Public IP 不夠多<ul><li>可能要 2000 才夠用</li></ul>
+</li>
+<li>NAT 效能不足</li>
+<li>有人會假裝是 Gateway</li>
+<li>廣播封包太多</li></ul>
+</li>
+<li>自幹 NAT 服務</li>
+<li>做了什麼<ul><li>切開會議室與有線無線網路</li>
+<li>餵綿羊吃封包</li>
+<li>架設其他有效網路與電力</li>
+<li>15+ public IP for servers</li></ul>
+</li>
+<li>WLAN 統計<ul><li>700+ users</li>
+<li>2000+ devices</li>
+<li>5Ghz users 60%</li>
+<li>總流量 75GB</li>
+<li>中研院骨幹 750 MB/s</li></ul>
+</li>
+<li>交誼廳爆滿<ul><li>網路只能撐 30 clients</li>
+<li>Staff：「奇怪？怎麼沒有爆？」</li>
+<li>會眾：「我不敢用 OAQ」</li></ul>
+</li>
+<li>有神秘的「free wifi」</li></ul>
+
+<p>主席小故事</p><ul><li>阿斯～</li>
+<li>有個講師覺得台灣很和善<ul><li>很想來，想來 talk</li>
+<li>美國軍方相關人士，學過一些中國式中文</li></ul>
+</li>
+<li>議程組不理他</li>
+<li>講師：從澳洲邀請我來，機票會很便宜呦～</li>
+<li>大家一起來加入明年的 HITCON 跟年底的 CTF 志工哦～</li></ul>
+
+
+
+<div id="window-resizer-tooltip" style="display: none;"><a href="https://hitcon.hackpad.com/ep/pad/static/b8r2SDHHLrX#" title="Edit settings"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth">1366</span> x <span class="tooltipHeight" id="winHeight">744</span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth">1366</span> x <span class="tooltipHeight" id="vpHeight">613</span></div></body></html>

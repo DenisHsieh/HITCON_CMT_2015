@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0052)https://hitcon.hackpad.com/ep/pad/static/xDVlr2PuxYK -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="version" content="3785">
+<style>body {font-family:Helvetica}ul.comment{list-style-image:url('https://hackpad.com/static/img/comment.png');} ul.task{list-style-image:url('https://hackpad.com/static/img/unchecked.png');}ul.taskdone{list-style-image:url('https://hackpad.com/static/img/checked.png');} </style><title>/30400$xDVlr2PuxYK</title>
+<style type="text/css"></style></head>
+<body><h1>R4 共筆空間</h1><p></p><p>R4 專屬共筆空間 - 歡迎大家一起寫筆記</p><p></p><p>Day 1</p><ul><li>10:50-11:40 NIRSA SQL Injection &amp; Cross-site Scripting&nbsp;<ul><li>Worm 攻擊原理</li>
+<li>SQL Injection<ul><li>Example: select * from members where account=‘$name’ and password=‘$passowrd’</li>
+<li>"or 1=1/“</li></ul>
+</li>
+<li>避免SQL Injection<ul><li>過濾使用者輸入字元 ’ * /&nbsp;&nbsp;&nbsp; # “or 1=1/“ -&gt; or 1=1</li>
+<li>處理特別字元</li></ul>
+</li>
+<li>XSS 種類<ul><li>反射型 （非持久型）</li>
+<li>持久型</li></ul>
+</li>
+<li>找XSS漏洞<ul><li>尋找</li>
+<li>測試 # alert(1) , prompt(1)</li>
+<li>植入</li></ul>
+</li>
+<li>2005/10 myspace - Samy - 第一個網路蠕蟲</li>
+<li>XSS 防禦<ul><li>不可能以單一特徵來概括所有XSS攻擊</li>
+<li>一切輸入都是有害的&nbsp;</li>
+<li>XSS Filter&nbsp;</li>
+<li>XSS Escape&nbsp;</li></ul>
+</li></ul>
+</li></ul>
+
+<ul><li>11:50-12:40 HitconGirls 惡意程式分析與逆向工程&nbsp;<ul><li>HitconGirls介紹</li>
+<li>資安學習地圖<ul><li>數位鑑識(IR組)&nbsp;</li>
+<li>惡意程式檢測-試爆炸彈<ul><li>安全環境下</li></ul>
+</li>
+<li>逆向工程&nbsp;</li></ul>
+</li>
+<li>惡意程式淺談<ul><li>蓄意破壞</li>
+<li>Grayware 擾人行為，但因人而異<ul><li>不造成破壞，但困擾</li></ul>
+</li></ul>
+</li>
+<li>手動分析<ul><li>registry key 檢測自動執行</li>
+<li>process 檢查記憶體中的程式<ul><li>process explorer 類似工作管理員，簡易分類程式</li></ul>
+</li>
+<li>networking 檢查網路<ul><li>tcp view 檢查程式連線狀況</li></ul>
+</li>
+<li>啟動項-開機先執行之項目<ul><li>AutoRuns - 先建立一個乾淨註冊表 之後與以比對 以顏色區分</li></ul>
+</li>
+<li>網路連線 - TCPView 記錄對外連線</li></ul>
+</li>
+<li>自動分析<ul><li>三大層面</li>
+<li>線上SandBox<ul><li>VirusTotal 各家防毒引擎檢測</li>
+<li>Anubis&nbsp; 自動產生結果</li>
+<li>Comodo -簡潔畫面</li>
+<li>受限制環境</li></ul>
+</li>
+<li>據模糊地帶</li></ul>
+</li>
+<li>三大關卡-篩選能力 加殼 經驗不足</li>
+<li>逆向工程(ex. Cake&nbsp; 幾顆蛋,牛奶多少,甚麼原料構成的)<ul><li>exe 檔 看不到程式碼</li>
+<li>組合語言(EXE 為此) -簡單指令<ul><li>MOV移動<ul><li>mov edx,8000h&nbsp; (edx=8000h) (h 16進位)</li>
+<li>mov eax,4h&nbsp; (eax=4h)</li></ul>
+</li>
+<li>CMP比較<ul><li>cmp edx,eax</li></ul>
+</li>
+<li>JMP跳躍<ul><li>ja-If Above,Jump to</li>
+<li>三一律&nbsp; 正負數(x=y JE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x&gt;y JA JG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x&lt;y JB JL)</li>
+<li>不一定與CMP共存</li></ul>
+</li>
+<li>Push(放進)&amp;Pop(拿出)</li></ul>
+</li>
+<li>反組譯<ul><li>動態分析工具<ul><li>Immunity Debugger</li>
+<li>olly Debugger</li></ul>
+</li>
+<li>靜態分析工具<ul><li>IDA Pro(例子&nbsp; 分析Honeynet Q2)<ul><li>加殼的程式分析時會看不到記憶體位置，可以找脫殼工具</li>
+<li>分析找不到目標時，可以找可執行檔分析</li>
+<li>點擊程式分析字串，特別注意粉紅色字串為windows API</li>
+<li>CopyFile WinExec&nbsp; (複製新的檔案&nbsp;&nbsp; 執行程式 且可以隱藏執行程式 ,隱藏參數)</li>
+<li>找出惡意程式以後，回到前方介紹的tcpview or process explorer</li>
+<li>TCP View 發現建立了一個lisenter 在3307 port</li>
+<li>process explorer 發現產生service.exe&nbsp;</li></ul>
+</li></ul>
+</li>
+<li>心得<ul><li>耐心 查 反覆操作</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li>
+<li>14:50-15:40 HST WEB前端攻擊與防禦<ul><li><br></li></ul>
+</li>
+<li>16:10-17:00 TDOH 欺騙IDA Pro Hex Rays插件！讓逆向分析者看見完全不同的結果<ul><li>IDA Pro</li>
+<li>f5&gt;組語轉C</li>
+<li>IDA Pro F5不能完全信任</li>
+<li>如何抓出解析弱點?<ul><li>ex)<ul><li>Push 0x12345678</li>
+<li>sub esp,04</li>
+<li>mov [esp],0x12345678</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+
+<ul><li>pop eax</li>
+<li>mov eax,[esp]</li>
+<li>Add esp,04</li>
+<li>1.jmp addr&nbsp;&nbsp;&nbsp; //JMP ==&gt;GoTo</li>
+<li>2.push addr//必須先申請記憶體&gt;寫入</li>
+<li>ret</li>
+<li>3.sub esp,04</li>
+<li>mov [esp],addr</li>
+<li>ret</li>
+<li>清空&gt;移動0到/相減/and運算</li>
+<li>cmp+je=sub+je(當結果為0時也會跳)(剪髮器也可以觸發)</li>
+<li>test eax,eax//邊義氣常使用&gt;只需要使用2byte</li>
+<li>cmp&gt;8byte</li>
+<li>pro檢查call&gt;&gt;有呼叫(看有幾個pu看有幾個push決定有幾個參數)</li>
+<li>MessageboxA(Arg1 ,Arg2 ,Arg3, Arg4)</li>
+<li>push arg4</li>
+<li>push arg3</li>
+<li>push arg2</li>
+<li>push arg1</li>
+<li>call MessageboxA</li></ul>
+<ul class="comment"><li>另:</li><ul style="list-style: none;"><li>push arg4</li>
+<li>push arg3</li>
+<li>push arg2</li>
+<li>push arg1</li>
+<li>Push 返回地址</li>
+<li>jmp MessageboxA</li><ul class="comment"><li>另:</li></ul>
+</ul>
+<ul style="list-style: none;"><li>push arg4</li>
+<li>push arg3</li>
+<li>push arg2</li>
+<li>push arg1</li>
+<li>Push 返回地址</li>
+<li>push MessageboxA</li>
+<li>ret</li><ul class="comment"><li>至此IDA Pro已亂掉</li></ul>
+</ul>
+<ul><li>ASM ==&gt; C:For<ul><li>往回跳/繼續執行</li>
+<li>xor eax,eax&gt;1 byte</li></ul>
+</li>
+<li>解析弱點<ul><li>hello world<ul><li>先(push)再做原本的事情(jmp ret)&gt;正確解析</li>
+<li>push L1(... ... ret)&gt; L1: goto L2&gt;L2: 原本程式&gt;&gt;IDA:unknown(?)</li><ul style="list-style: none;"><li>↑IDA Pro解析至此就不會繼續解析了</li></ul>
+</ul>
+</li></ul>
+<ul><li>jmp往回跳&gt;IDA Pro就沒辦法繼續解析</li>
+<li>解析到第一個ret/jmp就會當作函式尾</li>
+<li>call=push+jmp</li></ul>
+</li></ul>
+</ul>
+
+<p>Day 2</p><ul><li>10:20~11:10 反．反外掛-從遊戲保護機制到Rootkit技術&nbsp; LegBone &amp; Singo<ul><li>//腿骨 : 搞那麼多年bypass，不講一場hitcon 會很幹</li>
+<li>R3 --&gt; 應用層</li>
+<li>R0 --&gt; 內核層</li>
+<li>DirectX 3D 透視外掛(俗稱D3D透視，在台灣很少看到有人在寫)</li>
+<li>Hook DrawIndexedPrimitive函數<ul><li>禁用Z軸緩衝</li></ul>
+</li>
+<li>Hook EndScene 函數<ul><li>這可以將人物上色之類的</li></ul>
+</li>
+<li>自動練功工具：打怪、拿東西都是一個Call (在台灣很少看到有人在寫3D武俠遊戲的外掛)</li>
+<li>R3攻防方式 1.遊戲自帶 2.額外包含</li>
+<li>R3常檢測地方<ul><li>1.FindWindow</li>
+<li>2.ProcessName</li>
+<li>3.PostMessage的Iparam , wparam</li>
+<li>反調試<ul><li>DbgUiRemoteBreakin：會讓所有線程去呼叫DbgBreakPoint</li>
+<li>DbgBreakPoint :把當前控制權交出去int3</li></ul>
+</li>
+<li>某廠商反調試的case</li></ul>
+<ul style="list-style: none;"><li>DbgUiRemoteBreakin通常會被hook改成jmp ldrShutdownProcess(自我關閉)&nbsp;</li>
+<li>DbgBreakPoint通常會被hook改成C3也就是組語的ret&nbsp; 原本是CC 組語的int3</li>
+<li>各種HOOK只要恢復他就好</li></ul>
+<ul><li>反反外掛<ul><li>修改imagePath偽裝成系統進程繞過檢測，就像白名單</li>
+<li>上述Ring3的各種HOOK 的地方可以直接還原他......(在沒有被檢測HOOK被還原的情況下</li></ul>
+</li>
+<li>模塊隱藏<ul><li>斷開_PEB_LER_DATA&nbsp; 斷開底下三個鏈表來達到模塊隱藏˙</li></ul>
+<ul style="list-style: none;"><li>InLoadOrderModuleList</li>
+<li>InMemoryOrderModuleList</li>
+<li>InInitializationOrderModuleList</li></ul>
+</li></ul>
+<ul><li>介紹DLL常用注入方式<ul><li>註冊表注入：</li></ul>
+<ul style="list-style: none;"><li>利用系統的user32.dll啟動時，會加載註冊表AppInit_Dlls下所列出來的DLL，根據這個原理可以將欲注入的DLL路徑寫進AppInit_Dlls下，來達成注入。</li></ul>
+<ul><li>遠線程注入：</li></ul>
+<ul style="list-style: none;"><li>會用到的API有</li>
+<li>OpenProcess、GetProcAddress、VirtualAllocEx、WriteProcessMemory(WPM)、CreateRemoteThread、LoadLibrary(最常見的注入方式</li></ul>
+<ul><li>白名單注入：</li></ul>
+<ul style="list-style: none;"><li>原理是利用系統重要的進程來幫我們進行DLL的注入也就是第三方注入。</li></ul>
+<ul><li>輸入法注入</li></ul>
+</li></ul>
+</li></ul>
+<ul style="list-style: none;"><li>注入結論 :&nbsp;</li>
+<li>其實注入方式不只這些，只要能好好的將DLL注入進去不要被查殺就是好方法!!!</li></ul>
+</li></ul>
+
+<ul><li>//腿骨上場</li>
+<li>Windows 的函數調用過程</li>
+<li>PC Hunter&nbsp;</li>
+<li>Hook 函數可以做什麼<ul><li>SSDT 系統描述服務表</li>
+<li>KiFastCallEntry 會從SSDT取得函數地址</li>
+<li>替換掉裡面函數地址</li>
+<li>...</li></ul>
+</li>
+<li>inLine Hook<ul><li>直接修改函數</li></ul>
+</li>
+<li>調用函數時順便調用自己的函數<ul><li>PCHunter：手動分析病毒放了些什麼東西</li>
+<li>WinDbg : 腿骨大大自己繁中化，意者請洽他</li>
+<li>分析方法<ul><li>Windbg+WMware雙機調試</li></ul>
+</li>
+<li>HS 用inline Hook</li>
+<li>判斷方式<ul><li>是否為HS調用</li>
+<li>是，執行HS 的 Hook</li></ul>
+</li>
+<li>DEEMO ，橘子都用同一套，適用全部遊戲，只要有執行到他指定的函數，就會被當作以遊戲自身權限執行，因此就可以加載自己的東西</li></ul>
+</li>
+<li>11:20~12:10 社群簡介 - Community Lightning Introduction</li>
+<li><br></li>
+<li>14:20~15:10 Android App 逆向工程與簽章技術</li>
+<li>&nbsp;大家破解Android 的東西常常忽略估歌有加簽證，大家逆向前解簽，完成後加簽就結束了，忽略了很多細節。</li>
+<li>如何看到執行檔裡的內容?&nbsp; 逆向工程的重點於了解檔案的細節，而不是把檔案變成肉眼看得懂的東西就好。</li>
+<li>genymotion 速度快，只是部分內容不能客製化</li>
+<li>sublime 有很多功能跟套件</li>
+<li>IDA pro goehot 都說是很棒的工具!! 把組合語言轉成虛擬碼</li></ul>
+<p>數位簽章：</p><ul style="list-style: none;"><li><br></li><ul><li>andriod 還是基於linux base</li>
+<li>apk包裝過程: java .class--&gt; .dex File 經過apkbuilder包成APK 但是沒有簽章還是不能RUN</li>
+<li>jasigner&nbsp;</li>
+<li>zipalign 對AKP進行對其處理， 讓起始位置偏移四個位元 這樣記憶體映射的時候會更快</li>
+<li>破解工具 apktool dex2jar jd-gui idapro androguard</li>
+<li>開發工具 eclipse android sdk NDK genymotion</li>
+<li>語言 java C/C++ .Net</li></ul>
+</ul>
+<p>APK格式</p><ul style="list-style: none;"><li>meta-inf lib res assets classes.dex resources.arsc andriodmanifest.xml</li>
+<li>apktool disassembling rebuilding organizing&nbsp; SMIli</li>
+<li>smali&nbsp; VS dex<ul style="list-style: none;"><li>是一種組合語言 不同於JAVA APKTOOL才會出現</li>
+<li>dex 是binary code ,android 的jVm跟標準的JAVA JVM不依樣</li>
+<li>使用unzip才會出現</li></ul>
+</li>
+<li>Dex2jar 將dex轉成jar包含解密的功能</li>
+<li>變成JAR後再放進JD-gui反編譯 之後看得懂之後去理解程式、系統邏輯</li>
+<li>修改APKˋ只能改smali 碼，修改smali之需要拉近ide再重新打包就可以</li>
+<li>smali的跳要指令<ul style="list-style: none;"><li>if-testz vAA. +BBBB</li></ul>
+</li>
+<li>可以用IDAPRO去看smali</li>
+<li>重新打包回APK<ul style="list-style: none;"><li>使用jarsigner -verbose- keystore rdss.keystore- signedjar ffx.apk ff.apk rdss 加簽章但是還是不是同一隻APK</li>
+<li>manifest.mf 有sha1-digest&nbsp; 做完sha1 在做base 64 encode</li>
+<li>兩個地方做sha1 作為double check</li>
+<li>用proguard進行混淆</li>
+<li>online encryption</li>
+<li>apk簽章期限是多久? 50年 目前沒有找到調時間的欄位</li>
+<li>update Apk需要依樣的簽章</li>
+<li><br></li>
+<li><br></li></ul>
+</li></ul>
+
+
+
+<div id="window-resizer-tooltip"><a href="https://hitcon.hackpad.com/ep/pad/static/xDVlr2PuxYK#" title="Edit settings"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth"></span> x <span class="tooltipHeight" id="winHeight"></span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth"></span> x <span class="tooltipHeight" id="vpHeight"></span></div></body></html>

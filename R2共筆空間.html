@@ -1,0 +1,391 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0052)https://hitcon.hackpad.com/ep/pad/static/0cS0XpsdzSj -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="version" content="7414">
+<style>body {font-family:Helvetica}ul.comment{list-style-image:url('https://hackpad.com/static/img/comment.png');} ul.task{list-style-image:url('https://hackpad.com/static/img/unchecked.png');}ul.taskdone{list-style-image:url('https://hackpad.com/static/img/checked.png');} </style><title>/30400$0cS0XpsdzSj</title>
+<style type="text/css"></style></head>
+<body><h1>R2 共筆空間</h1><p></p><p>Day 1</p><p><b>14:50~15:40 那些年我們一起寫的外掛</b></p><ul style="list-style: none;"><li>棍子講外掛，寫外掛跟法外掛，講者是有名外掛的作者，七成技術三成故事</li></ul>
+<ul><li>為什麼會去寫外掛呢？<ul><li>MS Memory Write by nino1993</li></ul>
+</li>
+<li>做壞事是進步的原動力</li>
+<li>2008 PHP / Javascript</li>
+<li>2010 VB6 受挫的C</li>
+<li>2011 升級VB.NET，會養成不好的習慣</li>
+<li>2012C#/C++ Builder，因為有前輩大大在用於開發外掛，所以跟著學</li>
+<li>2013 好像很厲害的Python，最慣用的語言</li>
+<li>2015 潮到出水的Ruby(with Rails) ，換工作的關係</li>
+<li><br></li>
+<li>Crack Shield 使用者多過於講者<ul><li>講者的程式瘦長是因為電腦螢幕小</li>
+<li>柯基可愛的違反常理</li></ul>
+</li>
+<li>寫一個外掛<ul><li>讓怪物自動掉下來，而且可以控制怪物走向</li>
+<li>自動加速打怪</li>
+<li>全自動掛機(自動吸怪，自動攻擊，自動重新開啟)</li>
+<li>因為玩不贏同學，所以要開外掛，可以感覺自己一人拆海軍總部</li>
+<li>寫外掛很帥，而且要勇於挑戰自己，玩遊戲而不是被遊戲玩</li></ul>
+</li>
+<li>外掛的層次<ul><li>Screen<ul><li>影像辨識(效率不好)，自動化機器人</li></ul>
+</li>
+<li>Keyboard、Mouse<ul><li>按鍵精靈、Windows API：Send Input/ Post Message</li></ul>
+</li>
+<li>程式行為修改<ul><li>Hook Reversing</li></ul>
+</li>
+<li>脫機外掛<ul><li>Reversing(Decrypt Packet) Packet Analyze</li></ul>
+</li></ul>
+</li>
+<li>外掛及反外掛的攻防<ul><li>反外掛<ul><li>nProtect 時代的眼淚，邪惡的是機率性讓電腦重開機</li>
+<li>Hackable HackShield 檢查記憶體或封包是否被竄改，若有則自動關閉<ul><li>把LlParam 填上就可以通過偵測</li></ul>
+</li></ul>
+</li>
+<li>外掛技術<ul><li>Image Path 偽裝成工作管理員</li>
+<li>探測程式白名單，偽裝成安全程式(因在安裝遊戲時會使用)</li>
+<li>Inject Dll，寫一個dll讓程式載入<ul><li>Windows API :LoadLibray&nbsp;</li>
+<li>Create Remote&nbsp;</li></ul>
+</li></ul>
+</li>
+<li>反反反外掛<ul><li>NEXON GUARD 無效</li></ul>
+</li></ul>
+</li>
+<li>外掛的產業- 黑產<ul><li>日本立法無法寫外掛</li>
+<li>在台灣則不同，外掛可促進遊戲的發展<ul><li>外掛開發者賣程式(聽說瘋子谷的外掛開發者賺很多)</li>
+<li>交易平台賺交易費</li>
+<li>遊戲玩家則是冤大頭，遊戲不穩，又打不贏外掛</li></ul>
+</li></ul>
+</li>
+<li>遊戲的黑色產業<ul><li>遊戲幣買賣</li>
+<li>代客練功、解任務、打BOSS</li>
+<li>販賣外掛</li>
+<li>販賣遊戲帳號</li>
+<li>道具換現金</li></ul>
+</li>
+<li>最大交易平台 8X51<ul><li>龍蛋便宜賣(實際交易其他？)</li></ul>
+</li>
+<li>外掛綁定硬體，讓外掛不會被盜版</li>
+<li>比外掛還要好賺的多開<ul><li>Mutex偵測是否多開失效</li>
+<li>Hack Shield參數修改後可多開</li>
+<li>多次改版多次販賣</li></ul>
+</li>
+<li>晚上十點才出現的複製人軍團-打遊戲幣<ul><li>因為GM晚上十點下班</li></ul>
+</li>
+<li>學外掛救資安<ul><li>論壇經營學到社交工程</li>
+<li>外掛技術接軌逆向工程，培養駭客思維</li>
+<li>想要寫外掛就要學程式，學底層<ul><li>底層有作業系統，有CPU</li>
+<li>底層被偵測機率較低</li>
+<li>底層可以防盜版</li></ul>
+</li>
+<li>賣外掛寫驗證，Web/Crypto 沒問題<ul><li>密碼學學習可以讓連線至伺服器時不被抓到</li></ul>
+</li></ul>
+</li>
+<li>Q&amp;A<ul><li>外掛要加殼，免得被破解</li>
+<li>外掛破解失敗會加上後門(使你遭自動封鎖)</li>
+<li>遊戲廠商自動封鎖機制，會偵測一分鐘攻擊次數<ul><li>破解方式為修改封包的遊戲戳記</li>
+<li>偵測到外掛行為，讓遊戲人物自動犯規以封鎖</li></ul>
+</li>
+<li>HackShield、遊戲公司的白名單</li>
+<li>遊戲資料若大多都存於遊戲公司server<ul><li>難修改，但是運算量高</li>
+<li>傾向不修改，改做脫機外掛</li>
+<li>但是動作太規律則會被偵測</li></ul>
+</li>
+<li>有趣的外掛被破解事故<ul><li>外掛走HTTP，所以可以簡單共用</li>
+<li>外掛Server被打進去，所以做違法代銷</li></ul>
+</li>
+<li>遊戲更新後會有部份同，部份不同，太多更新，所以開發自動更新功能</li>
+<li>防外掛的方式<ul><li>用特殊的程式開發，則會讓記憶體難以追蹤</li></ul>
+</li>
+<li>開源計畫(MapleStoryGameHack)<ul><li>因為朋友被駭，很傷心，所以放出</li>
+<li>遊戲不玩了，所以開源讓大家學習<ul><li>MSDoggy</li>
+<li>CrackShield-MapleStory-Hack</li>
+<li>Deprecated-MS-Memory-Writer</li></ul>
+</li></ul>
+</li>
+<li>與遊戲公司老板聊天<ul><li>若遊戲無外掛表示沒人玩，很丟臉</li></ul>
+</li>
+<li>在開發工具都沒被開發出來時<ul><li>使用Debugger自幹</li>
+<li>開一個VM裡面跑，Debugger再偵測VM，則不容易被抓到</li></ul>
+</li></ul>
+</li></ul>
+
+<p><b>16:10~17:00&nbsp; CTF For Beginner</b></p><ul><li>投影片連結</li></ul>
+<p><a href="https://drive.google.com/file/d/0B32zFoFRABqiZnl4czRSam5jVUk/view?usp=sharing"></a>https://drive.google.com/file/d/0B32zFoFRABqiZnl4czRSam5jVUk/view?usp=sharing</p><ul><li>以影片方式Demo</li></ul>
+<p>*</p><p><a href="https://www.youtube.com/watch?v=XPlxIYUm_3M"></a>https://www.youtube.com/watch?v=XPlxIYUm_3M</p><p></p><ul><li>講者：香蕉蘋果<ul><li>交大有資安的課程</li>
+<li>BambooFox的成員</li>
+<li>資安課程主題，程式不安全的課程，中二老師上的</li>
+<li>Defcon Con 亞軍那年開始打CTF</li></ul>
+</li>
+<li>CTF第一次開始都覺的看了三小<ul><li>NC連上service 開始解題 (NC 為Linux上一個工具，打CTF還是用Linux順手)</li>
+<li>ROP 給你數個指令，以其能夠得到Flag 比如 read open write&nbsp;<ul><li>open /Home/rop/flag</li>
+<li>open returen file fd</li>
+<li>read file fd to buffer</li>
+<li>write buffer to stdout</li></ul>
+</li>
+<li>Birnary<ul><li>objdump 看</li>
+<li>IDA Pro看比objdump看容易</li>
+<li>需要懂組語，要用assembly驗證</li>
+<li>IDA Pro 按F5反組譯成C 語言</li></ul>
+</li>
+<li>CTF 類型<ul><li>Jeopardy 猜迷方式</li>
+<li>Attack and Defense 主機攻防 台交攻防賽比較可能打到<ul><li>每隊維護自己的Server(GameBOX)&nbsp;</li>
+<li>攻擊別隊的弱點可得分</li>
+<li>需修補自己的漏洞免得失分</li>
+<li>Flag五分鐘內就會更新</li>
+<li>封包replay也是一種方式</li>
+<li>打進去後植入後門，可以得更多分</li></ul>
+</li>
+<li>King Of Hill<ul><li>近於Attack and Defense</li>
+<li>佔領越久分數越高</li></ul>
+</li></ul>
+</li>
+<li>Asis CTF Finals 2014<ul><li>一題都看不懂T&gt;T</li>
+<li>教練我想打CTF</li>
+<li>第一次總是比較痛</li>
+<li>return address不想解題，暴力破解，不是好方法</li>
+<li>沒人題點難進步</li></ul>
+</li>
+<li>GDB<ul><li>xinetd 架設相同環境模擬</li>
+<li>連線成功要用ps看pid</li>
+<li>debug以觀察stack frame</li></ul>
+</li>
+<li>pwntools<ul><li>一定要學的Python package</li></ul>
+</li>
+<li>check.sh 檢查binary有什麼樣的防護</li>
+<li>期末考CTF都不會只能裝忙<ul><li>replay 封包</li>
+<li>binary Patch<ul><li>input length 改小</li>
+<li>buffer開大</li></ul>
+</li>
+<li>ps -aux |&nbsp; grep startbound</li>
+<li>kill $pid</li>
+<li>crontab -l 看排程</li></ul>
+</li>
+<li>backdoor<ul><li>.vimrc</li>
+<li>.swap</li>
+<li>.x11-config</li>
+<li>nc -e /bin/sh -l -p 8888 將聽到的指令交由sh執行</li>
+<li>較好的後門 反向連線回自己主機</li></ul>
+</li>
+<li>null byte 放在string 前可以破解長度問題？</li>
+<li>buffer overflow<ul><li>破解登入，跳過檢查</li></ul>
+</li>
+<li>wget something<ul><li>file 看檔案類型</li>
+<li>string 看檔案內字串</li></ul>
+</li>
+<li>HexEdit 好用工具</li>
+<li>Binary Check<ul><li>用HexEdit&nbsp; 修改buffer 同一個buffer要改多個地方，否則service check 不會過</li></ul>
+</li>
+<li>網站<ul><li><a href="http://train.cs.nctu.edu.tw/"></a>http://train.cs.nctu.edu.tw</li>
+<li><a href="http://ctf.cs.nctu.edu.tw/"></a>http://ctf.cs.nctu.edu.tw</li>
+<li><a href="https://bamboofox.torchpad.com/class/training"></a>https://bamboofox.torchpad.com/class/training</li></ul>
+</li>
+<li>Q &amp;A<ul><li>入門知識<ul><li>linux</li>
+<li>C 語言</li></ul>
+</li>
+<li>BInary Patch<ul><li>常看就會？</li>
+<li>左右分割試窗&nbsp; 左邊開olly debugger 右邊 HexEdit</li></ul>
+</li>
+<li>新手玩Web拿不到分T&gt;T Web狗沒人權</li>
+<li>新手可以分工，大家一起解</li></ul>
+</li></ul>
+</li></ul>
+
+<p></p><h2>Day 2</h2><p><b>10:20-11:10 Confessions of geek - Hard Drive Secret Let Out</b></p><ul><li>資料恢復真實成本<ul><li>材料錢要找到很高相容度也不易</li>
+<li>就算找到相容度高的 ,碟片刮傷也是無法恢復.</li>
+<li>設備(低塵環境)</li>
+<li>資料恢復跟賭博行業差不多 （重點誤</li></ul>
+</li></ul>
+
+<ul><li>幫學妹修硬碟 做資料恢復 是最高好人技能 (Level Max )<ul><li>12V(提供給motor)</li>
+<li>5V 數位邏輯電路</li></ul>
+<ul style="list-style: none;"><li><br></li></ul>
+</li></ul>
+<ul><li><s>某公司的設備演講可以說 在外面不可以講</s>&nbsp;<ul><li>燒掉的電路板不適合再做維修</li>
+<li>替換法把壞板板換成好板板</li>
+<li>保留原版儲存性零件</li></ul>
+<ul style="list-style: none;"><li><br></li></ul>
+</li></ul>
+<ul><li>昂貴恢復設備原理<ul><li>FPGA ATA IP Core,ATA 轉SATA Bridge , 發出VSC Command.</li></ul>
+<ul style="list-style: none;"><li><br></li></ul>
+</li></ul>
+<ul><li>PC3000UDMA<ul><li>數位鑑識人員表示：難用<ul><li>UI 爛爛，UX 爛爛</li>
+<li>鑑識人員不夠瞭解硬碟故障原理</li>
+<li>多重故障原因可能性(硬體、軔體)</li>
+<li>代理教學人員使用經驗不夠多.</li>
+<li>真正懂技術的人偏向水電工師徒制,喜歡不整理規劃</li></ul>
+<ul style="list-style: none;"><li><br></li></ul>
+</li></ul>
+</li></ul>
+<ul><li>硬碟啟動流程(已WD為例)<ul><li>MCU ROM bootstrap&nbsp;</li>
+<li>SPI ROM</li>
+<li>Module 01 Index on disks<ul><li>Module 是碟片上韌體與匹配參數分類</li>
+<li>序號型號ATA密碼在專門</li>
+<li>重要級數 重要模組一丟失 資料一去不復返</li></ul>
+</li>
+<li>ATA on disks</li>
+<li>其他參數</li></ul>
+<ul style="list-style: none;"><li><br></li></ul>
+</li></ul>
+<ul><li>有必要的中斷<ul><li>中斷目地是讓硬碟"不當機",然後有機會可讀寫韌體區</li>
+<li>修理或備份出重要參數模塊</li>
+<li>之後與其他相容硬碟可進行熱交換</li></ul>
+<ul style="list-style: none;"><li><br></li></ul>
+</li></ul>
+<ul><li>韌體與資料恢復關係</li>
+<li>世上最大黑硬體市場-遊戲機<ul><li>民之所欲 黑之所向</li></ul>
+</li>
+<li>OSSLab EasySATool</li>
+<li>Service area 實驗驗證<ul><li>SPT</li>
+<li>WD2500KS<ul><li>SPT:720</li>
+<li>Head:6</li>
+<li>SACYL:64</li>
+<li>可用空間</li>
+<li>低階格式化後還存不存在</li></ul>
+</li>
+<li>操作</li></ul>
+</li></ul>
+
+<ul><li>韌體防火牆 Firmwall</li></ul>
+
+<ul><li>Service Area 其他應用<ul><li>被抄水表時 把主頭(0、1頭)Service Area填0</li></ul>
+</li></ul>
+
+<ul><li>逆向 Serial UART腳位</li>
+<li>GND腳位判定<ul><li>電表開導通蜂鳴檔位, 一端固定在大的金屬接觸面,另一個測試各接腳.有導通表示為GND</li></ul>
+</li></ul>
+
+<p></p><p><b>11:20-12:10 Hack Mobile Games For Fun</b></p><p></p><ul><li>永遠的beta測試玩家 遊戲資歷22年</li>
+<li>來聊聊手機遊戲的__<ul><li>手機遊戲一年產值?80~800億(by internet)</li>
+<li>2014營收 taiwan排名&nbsp;<ul><li>no.10 (ios) (每日一句：放在第一個不一定是第一名)</li>
+<li>no.5 (google)</li></ul>
+</li></ul>
+</li>
+<li>手機遊戲破解<ul><li>Lv.0<ul><li>Google Search (破解 解鎖 以付費)</li></ul>
+</li>
+<li>Lv.1<ul><li>記憶體修改 (八門 燒餅)</li>
+<li>限制(遊戲程式沒有做↓)<ul><li>Root 權限檢查</li>
+<li>Memory 沒有加密</li>
+<li>遊戲程式沒有檢查上面的行為<ul><li>已安裝程式檢查</li>
+<li>動作前後數值檢查</li></ul>
+</li></ul>
+</li></ul>
+</li>
+<li>Lv.2<ul><li>Unpack apk&gt;去廣告、中文化都會用到&nbsp;</li>
+<li>改smali再repack 結束</li>
+<li>需要 java 與 app 開發經驗</li>
+<li>bytecode可以直接轉sourcecode看<ul><li>Decompile 工具</li>
+<li><a href="http://jd.benow.ca/"></a>http://jd.benow.ca/</li></ul>
+</li>
+<li>前提<ul><li>程式沒有檢查 checksum</li>
+<li>沒有沒有做 obfuscated<ul><li>obfuscated 就是把變數，method，殺小可以 identified 的東西都變成看不懂的玩意兒</li></ul>
+</li>
+<li>沒有用 Native Code</li>
+<li>主程式用java寫</li></ul>
+</li></ul>
+</li>
+<li>Lv.3<ul><li>unity<ul><li>game engine</li>
+<li>影片&gt;unpack(apk2)&gt;&gt;assets資料夾(改unity)<ul><li>Unity 的 script 通常是 C#，跟 java 一樣容易 decompile</li>
+<li>il.Spy (CILTool)</li>
+<li>&nbsp;repack&gt;新的APK (簡單數值修改)</li></ul>
+</li></ul>
+</li></ul>
+</li>
+<li>Lv.4<ul><li>.NET Reflector 配合 Reflexil</li></ul>
+</li>
+<li>Lv.5<ul><li>Visual Studio客製化修改</li>
+<li>自製Tool修改offset<ul><li><a href="https://github.com/winest/ciltools"></a>https://github.com/winest/ciltools</li></ul>
+</li>
+<li>越戰越強不失遊戲樂趣</li>
+<li>*.li+Notepad&gt;找method&gt;convert *.il to *.dll</li>
+<li>*.config 做debug.log的機制(設定原始值)</li></ul>
+</li></ul>
+</li>
+<li>手機遊戲防禦</li><ul class="comment"><li>讓我們來講講正經的東西</li></ul>
+<ul><li>Obfuscate: Android跟Unity都有內建的但沒人用<ul><li>Android: proguard</li></ul>
+</li>
+<li>內容加密</li>
+<li>合理範圍值檢查</li>
+<li>適可而止 否則兩敗俱傷XD</li><ul style="list-style: none;"><li>&nbsp;兩敗俱傷XD</li>
+<li>&nbsp;兩敗俱傷XD(因為很重要所以說3次)</li></ul>
+</ul>
+</ul>
+
+<ul><li>Q&amp;A<ul><li>神魔利用proxy來更改數據 脫機玩遊戲<ul><li>修改封包內容，或重送過關封包</li>
+<li>防禦&gt;看地獄級關卡bonus看誰打的好 打得好就是外掛抓</li></ul>
+<ul class="comment"><li>IRC 上有人提到可以用 signature 來預防</li></ul>
+</li></ul>
+<ul><li>由unity來更改數據(?</li>
+<li>function name和實際動作如何確定其配對?<ul><li>如剛剛的範例 它的code幾乎是明碼</li>
+<li>身為RD 上下Trace一下code是理所當然的</li>
+<li>可以利用 debug 訊息來辨識該 method 是不是會在如你所想的時機被使用 (print debug 大法)</li></ul>
+</li>
+<li>?<ul><li>conclusion&gt;多辦一些測試帳號是很重要的</li></ul>
+</li>
+<li>既然都可以hash了 就把那一段blablabla(?</li>
+<li>改了這麼多遊戲 有沒有很機車安全性很高的 or 哪國家特別機車<ul><li>日本法律規定開發外掛違法</li>
+<li>從server監測數值</li></ul>
+</li></ul>
+</li></ul>
+
+<p></p><p><b>14:20-15:10 An Anti-Mitigation Exploit Generation Integrating with Metasploit Framework</b></p><p></p><p></p><p></p><p></p><p><b>15:40-16:30 Let’s Play Hide and Seek In the Cloud - The APT Malware Favored in Cloud Services</b></p><ul><li>講師自我介紹</li>
+<li>APT VS Cloud Service<ul><li>三種service 簡介</li>
+<li>APT 攻擊上升曲線和Cloud Service 熱門上升曲線雷同</li>
+<li>APT攻擊事件範例 - ex : LOL 、 刺殺金正恩電影</li>
+<li>APT use VM →取得肉雞</li>
+<li>APT use WebServer → 直接上傳網站作攻擊、利用WebServer做轉送服務，將WebServer作中繼直接使用<ul><li>ex : 日本年金機構被駭，造成資料外洩→CloudyOMG，租用Server 及WebService 作攻擊</li><ul style="list-style: none;"><li>&nbsp; 兩層式攻擊，外層被阻絕，不會影響到內層方法的使用</li></ul>
+</ul>
+</li></ul>
+<ul><li>&nbsp;Redirect<ul><li>Cloud Service &lt;--&gt; Victim &lt;--&gt; Second Stage C&amp;C<ul><li>Elirks&nbsp; : use yahoo , blog , plurk , twitter 當作cloud service<ul><li>第一層用DES 加密且會使用當地常用Blog</li></ul>
+</li>
+<li>WMlgh0st : 利用javascript執行系統指令來攻擊<ul><li>第一層加密，解密後會連至第二層Service</li></ul>
+</li>
+<li>Midhos</li>
+<li>IXESHE :RAS , RC4</li>
+<li>Taleret : yahoo , 痞客幫</li>
+<li>PlugX : Twitter、百度...</li></ul>
+</li>
+<li>使用查詢服務，取得第二層中繼站下載攻擊程式<ul><li>Protux : DNS Watch 、IT138，且使用Hinet DNS Server 、SeedNet DNS Server,</li><ul style="list-style: none;"><li>會修改User agent</li></ul>
+</ul>
+</li></ul>
+<ul><li>利用Dropbox 或 google drive<ul><li>&nbsp;<ul><li>利用程式取得Dropbox上檔案，解密作為第二把Key 再去取得使用者資料</li></ul>
+</li>
+<li>GDrive&nbsp;<ul><li>Search 文件資料</li>
+<li>使用google api 的 access token</li>
+<li>將受害者資料上傳至建立的Gamil google driver中</li></ul>
+</li>
+<li>illtat<ul><li>利用blog</li>
+<li>dll 做encode 變成字串，並自訂Filter</li></ul>
+</li></ul>
+</li>
+<li>將Cloud Service 作為途徑<ul><li>Stalk<ul><li>利用GTalk做傳輸管道</li></ul>
+</li>
+<li>KimsuKy<ul><li>TeamViewer、Email</li>
+<li>RC4加密</li>
+<li>不會有訊息遺留</li></ul>
+</li></ul>
+</li></ul>
+</li>
+<li>好處<ul><li>簡單易改動 Easy to change</li>
+<li>容易Bypass DNS</li>
+<li>esay Bypass AV</li>
+<li>便宜，容易建立，維護</li></ul>
+</li>
+<li>防範<ul><li>CTP(Cyber Thread Intellignce)<ul><li>detect</li>
+<li>respond</li>
+<li>review&nbsp;</li>
+<li>prevent</li></ul>
+</li></ul>
+</li>
+<li>Q &amp; A<ul><li>提到兩層式結構先撈Decode字串在去取得程式，都容易讓線索被阻斷，為何可以找到突破點?<ul><li>查詢惡意程式中有無攻擊者資訊</li>
+<li>惡意程式語系判斷</li>
+<li>惡意程式Access token追查</li>
+<li>中繼站可能會換很快，所以不能拖太久(閃電戰!!?)</li></ul>
+</li></ul>
+</li>
+<li>宣傳<ul><li>HITCON GIRLS 招募中~~~</li></ul>
+</li></ul>
+<ul style="list-style: none;"><li><br><ul style="list-style: none;"><li><br></li></ul>
+</li></ul>
+</li></ul>
+
+<p></p>
+
+<div id="window-resizer-tooltip" style="display: none;"><a href="https://hitcon.hackpad.com/ep/pad/static/0cS0XpsdzSj#" title="Edit settings"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth">1366</span> x <span class="tooltipHeight" id="winHeight">744</span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth">1366</span> x <span class="tooltipHeight" id="vpHeight">613</span></div></body></html>

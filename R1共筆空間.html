@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0052)https://hitcon.hackpad.com/ep/pad/static/uD9F2Jlo53i -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="version" content="4692">
+<style>body {font-family:Helvetica}ul.comment{list-style-image:url('https://hackpad.com/static/img/comment.png');} ul.task{list-style-image:url('https://hackpad.com/static/img/unchecked.png');}ul.taskdone{list-style-image:url('https://hackpad.com/static/img/checked.png');} </style><title>/30400$uD9F2Jlo53i</title>
+<style type="text/css"></style></head>
+<body><h1>R1 共筆空間</h1><p></p><h2>8/28 Community Day1</h2><p></p><p><b>8/29 Community Day2</b></p><p></p><p><b>10:20~11:10&nbsp;&nbsp; 從WEB腳本漏洞到客戶端應用的遠程命令執行</b></p><p></p><p>案例：2007 ActiveX 接口設計不當</p><p>External api 設計不當</p><p></p><p>Browser bug hunting 2012</p><p></p><ul><li>特權域<ul><li>本地文件操作</li></ul>
+</li></ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 應用程序&gt;功能接口&gt;web腳本</p><ul style="list-style: none;"><li>&nbsp;&nbsp;&nbsp; ↓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↙</li></ul>
+<p>命令執行命令執行&lt;設計缺陷</p><p>沒有fuzz沒有overflow</p><p></p><ul><li>瀏覽器口號<ul><li>啟動最快、夠極速</li>
+<li>漂亮皮膚</li>
+<li>擴展</li>
+<li>雙核</li></ul>
+</li>
+<li>安全缺陷<ul><li>例如：browser://skin</li>
+<li><br></li>
+<li>特權域&gt;功能API&gt;&gt;下載&gt;</li><ul style="list-style: none;"><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓皮膚位址</li></ul>
+</ul>
+<ul><li>window.extermal.Skincall("install","<b>cmd.exe</b>",0,"<a href="http://..../"></a><b>http://..../</b><b>....</b>","instThmemeCallback");</li></ul>
+<ul class="code"><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑寫入本地的皮膚名稱</li></ul>
+</li></ul>
+<p>搜狗瀏覽WooYun-2013-37211</p><p></p><p>百度瀏覽器WooYun-2014-80438</p><ul><li>..../..../.../&gt;&gt;...//...//...//</li>
+<li>沒有過濾()的JSONP接口</li></ul>
+
+<p>WooYun-2014-80158 擴展</p><p></p><p>繞過xss auditor的方法</p><ul><li>水平有限</li>
+<li>雙核?訪問訪問某些網站(網銀/ftp)&gt;自動切換另一核&gt;&gt;偷偷執行XSS</li></ul>
+
+<p>WooYun-2014-81309 安裝擴展的ID。&nbsp;&nbsp;&nbsp;&nbsp; .crx結尾</p><p>302跳轉</p><p></p><p>Chrome</p><ul><li>特權域 &gt; chrome://</li>
+<li>插件域 &gt; chrome-extension://</li></ul>
+
+<p>搜狗擴展域</p><p>se-extension://</p><p>攻擊頁面&gt;自帶擴展&gt;DOM XSS&gt;iframe&gt;NPAPI</p><ul><li>修復(referance expresion)<ul><li>w=window.open...&nbsp; (打開接口)</li>
+<li>等待500毫秒再開啟</li></ul>
+</li></ul>
+<p>WooYun-2014-84110</p><p></p><p>WooYun-204-85567</p><p></p><p>繞過彈窗攔截</p><ul><li>禁止window.open</li>
+<li>pustMessage &gt; cmd + url</li></ul>
+
+<p>將惡意url置於alert</p><p>view page + background page</p><p>createprocess</p><p></p><p>繞過startExe的改變</p><p></p><p>靜默擴展安裝的危險</p><p>應用市場的id</p><ul class="comment"><li>靜靜安裝內部擴展 不會有用戶提示</li></ul>
+
+<p>"public":true</p><ul class="comment"><li>任何一個頁面皆可調用其功能</li></ul>
+<p>攻擊頁面&gt;靜默安裝&gt;調用API</p><p></p><p>Run2函數</p><p></p><p>解壓zip造成的安全問題</p><ul><li>WooYun-2015-95664</li>
+<li>Qq.com&nbsp;</li>
+<li>創建qrx&nbsp; 放置名為../.../../之檔案</li>
+<li>Dll hijacking</li></ul>
+
+<p>WooYun-2015-96413</p><p></p><p>網銀控件</p><p>導致遠程任意代碼</p><p>受信任站點&gt;可執行命令</p><p>*掏寶網XSS&gt;&gt;可以直接執行命令</p><p></p><p>郵件課郵件客戶端</p><p>避免郵件內容執行腳本(view.html)&gt;傳文件會創建目錄???</p><p>傳惡意代碼會消失 但是文件尾會出現</p><p></p><p>源碼中搜尋external</p><p></p><p>我認為最經典的案例&gt;&gt;QQ遠程命令執行</p><p>QQ秀 基於Flash&gt;可自行輸入心情、調整顏色&gt;&gt;禁止&lt;&gt;&amp;:輸入&gt;但是彈框快&gt;沒有進後台檢查&gt;數據被壓縮(中間漏聽)&gt;把數據抽換&gt;音樂AS2寫即可插入&gt;&gt;則打開flash=打開網頁</p><p>TextField 支援 htmltext 支援 &lt;img&gt;</p><p>Img link換.swf(AS2編寫)</p><p></p><p></p><p>想執行惡意API&gt;讓使用者下載再執行</p><p>this.callexternal("download",5,"http://...",....)</p><p>but :GET 添加 /&nbsp; 下載 host 的文件</p><p>&gt;自定義請求 get</p><p>&gt;失敗 因為 0d0a&gt;0a</p><ul class="comment"><li>flash.external.....會吃/r</li></ul>
+<p>Xml&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; →&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _callOut(xml)</p><p>&gt;&gt;用實體字符&amp;#xxx</p><p>&gt;&gt;但是IP綁定&gt;找綁定域名下可用資源&gt;&gt;&gt;下載資源再用openURL</p><p></p><p>Q&amp;A</p><ul><li>那些瀏覽器都沒用https</li>
+<li>很少用別人的工具<ul><li>我喜歡把很小很小的口子 慢慢慢慢撕裂開來&nbsp;&nbsp;&nbsp;</li></ul>
+</li></ul>
+
+<p></p><p>11:20~12:10&nbsp;&nbsp;&nbsp; Your Lightbulb Is Not Hacking You: Observation from a Honeypot Backed by Real Devices</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><ul class="code"><li>&nbsp;&nbsp;&nbsp; 喵斯基？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li></ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp;&nbsp; 各種&nbsp; Iot 裝置</p><p>&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp;&nbsp; Iot搜尋引擎</p><p>&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp; Blck diagram - Taipei lab. Raspberry Pi 2</p><p>&nbsp;&nbsp; Munich lab-banana pi</p><p>&nbsp;&nbsp; Fake d-link dir</p><p>&nbsp;&nbsp; Why backed by real device</p><p>&nbsp;&nbsp; Script kiddie</p><p>&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp; Philips hue(夜店燈泡</p><p>&nbsp;&nbsp; 沒有人要try</p><p>&nbsp;&nbsp;</p><p>&nbsp;&nbsp; LIFX</p><p>&nbsp;&nbsp; port 56700</p><p>&nbsp;&nbsp; Api:2.0</p><p>&nbsp;&nbsp; 還是沒有人要黑QQ</p><p>&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp; Nintendo</p><p>&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp; Google <s>broken</s>(?) Glass</p><p>&nbsp;&nbsp; 從研究中移除</p><p>&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp; WDcloud 2tb</p><p>&nbsp;&nbsp; 功能太齊全 → 等於不安全</p><p>&nbsp;&nbsp; Arp broadcasting</p><p>&nbsp;&nbsp; Ssdp m-search</p><p>&nbsp;&nbsp; Ssdp notify</p><p>&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp; AppleTv</p><p>&nbsp;&nbsp; 收到來自360的掃描</p><p>&nbsp;&nbsp; Port60000，可能是來自同一個掃描軟體</p><p>&nbsp;&nbsp;&nbsp;</p><p>&nbsp; Samsung smartTV</p><p>&nbsp;&nbsp;</p><p>&nbsp;&nbsp;</p><p>&nbsp;Samsung smartCam</p><p>&nbsp;沒有人try 但帳密設root/root</p><p>&nbsp;</p><p>&nbsp;iMac</p><p>&nbsp;</p><p>&nbsp;iRadio</p><p>&nbsp;沒有port,只是裝飾品</p><p>&nbsp;</p><p>&nbsp;攻擊大多是script kiddies</p><p>&nbsp;</p><p>&nbsp;條列script kiddies 的攻擊…</p><p>&nbsp;</p><p>&nbsp;Tshark still helps&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p><b>14:20~15:10 Some things about LAN device detection (The identification for BYOD/IoT)</b></p><p><b>關於內網設備識別的二三事</b></p><p></p><p>NTDTG</p><p></p><ul><li>Hitcon 2014 Slogan<ul><li>威脅是一定有的，學會適應</li></ul>
+</li>
+<li>Hitcon 2015 Slogan<ul><li>物聯網安全</li></ul>
+</li>
+<li>Combination<ul><li>物聯網威脅是一定有的，我們要學會適應</li></ul>
+</li></ul>
+
+<p>LDI:LAN device identification</p><p></p><p>萬一有誤會,就會拿針對x86的特徵碼偵測攻擊arm的shellcode</p><p></p><p>當家用設備(arm、)</p><p></p><p>Mornitoring</p><ul><li>計量(流量)</li></ul>
+<p>Access control</p><ul><li>連網控制</li></ul>
+<p>Learning</p><p>Lan device behave&nbsp;</p><p></p><p>why lan identification</p><p></p><ul class="comment"><li>當botnet/malware看起來越來越正常，使用blogspot,dropbox來當command server</li></ul>
+<p>Ids/ips need to change</p><p></p><p>比較好迴避AV/IPs/FW</p><p></p><p>冰箱冰箱開始送Spam</p><p>對PC正常但對其他智慧家電…(要如何知道家電的廠商、型號)</p><p>如果一台冰箱的流量突然變得很大，跟一台server流量很大的是不同意義</p><p></p><p>how to detect lan device</p><p></p><p>主動</p><ul><li>Fingerprinting scan</li>
+<li>易被發現</li></ul>
+
+<p>被動</p><p></p><p></p><p></p><p>If 某 ip 是 router/NAT</p><p></p><p></p><ul><li>Two key<ul><li>Id field in ip header</li></ul>
+<ul style="list-style: none;"><li>一般NAT不太改ip id</li>
+<li>如果host有很多 IP ID sequences,那或許它是NAT</li></ul>
+</li></ul>
+
+<ul><li>Ttl field ip header</li>
+<li>If 在內網內，發現TTL非初始值(128 for Windows)，那麼Packet s 或許有被NATed或者Routed 過了</li></ul>
+
+<p></p><ul><li>如何偵測<ul><li>Check OUI of mac address</li></ul>
+<ul style="list-style: none;"><li>到Ieee查OUI <a href="http://standards-oui.ieee.org/oui.txt"></a>http://standards-oui.ieee.org/oui.txt</li>
+<li>可以知道廠牌</li>
+<li>應用:綿羊牆</li></ul>
+</li></ul>
+<ul><li>Check the DHCP options<ul><li>有可能洩漏</li></ul>
+</li></ul>
+<p>從discovery可以識別</p><p>Vendor class identifier</p><p></p><p>把request 序列當特徵碼</p><p></p><ul><li>Check the user-agent of http<ul><li>ie11</li>
+<li>iPhone</li></ul>
+</li></ul>
+
+<ul><li>Check the used applications</li></ul>
+<p>Pattern-based AppleID</p><p>儘早被識別，可及早apply QoS</p><p></p><p>AppleID for SSL-based applications</p><p></p><p>Certificate有關鍵字可抓</p><p></p><p>遇到私有加密方式…</p><p>放棄payload</p><p>FSM</p><p></p><p>Iot home router/gateway</p><p>&nbsp;Lan wan資料交換必經之地路</p><p></p><p>Home Router 的ram有多大?</p><p></p><p></p><p>數據科學兩大派別</p><p></p><p>設備識別自動化</p><p>透過mac oui,dhcp packets取得</p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>15:40~16:30 Microsoft Edge MemGC Internals</p><p></p><p></p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p>
+
+<div id="window-resizer-tooltip" style="display: none;"><a href="https://hitcon.hackpad.com/ep/pad/static/uD9F2Jlo53i#" title="Edit settings"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth">1366</span> x <span class="tooltipHeight" id="winHeight">744</span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth">1366</span> x <span class="tooltipHeight" id="vpHeight">613</span></div></body></html>
